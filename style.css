@@ -2,12 +2,14 @@ body {
   font-family: sans-serif;
   padding: 0;
   margin: 0;
+  text-align: center;
 }
 
 header {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  align-items: center;
+  margin: 0 auto 100px  auto;
   width: 90%;
   max-width: 1000px;
 }
@@ -26,6 +28,7 @@ main {
   margin: 30px auto;
   width: 90%;
   max-width: 1000px;
+  text-align: left;
 }
 
 .searchField {
@@ -34,6 +37,8 @@ main {
   border-radius: 5px;
   padding: 5px 10px;
   background-color: white;
+  width: 70%;
+  min-width: 400px;
 }
 .searchField > input {
   border: none;
@@ -65,8 +70,6 @@ main {
   margin-left: 10px;
   flex-direction: column;
   justify-content: center;
-}
-.cardTitle {
 }
 .cardTitle > * {
   padding: 0;
@@ -107,7 +110,6 @@ footer {
   text-align: center;
   font-size: 0.7rem;
   padding: 20px 0;
-  margin-top: 50px;
 }
 footer > .counters {
   margin: 61px 0;
