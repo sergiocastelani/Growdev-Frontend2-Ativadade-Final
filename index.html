@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./index.js" type="module" defer></script>
   <title>Rick & Morty</title>
 </head>
 <body>
@@ -97,11 +99,11 @@
   <img src="./images/portal.png" width="300px">
 
   <footer>
-    <p class="counters">
-      <span>PERSONAGENS: XX</span>
-      <span>LOCALIZAÇÕES: XX</span>
-      <span>EPISÓDIOS: XX</span>
-    </p>
+    <div class="counters">
+      <span id="counterCharacters">PERSONAGENS: XX</span>
+      <span id="counterLocations">LOCALIZAÇÕES: XX</span>
+      <span id="counterEpisodes">EPISÓDIOS: XX</span>
+    </div>
     <p class="developer">Desenvolvido por: <em>Sérgio C Castelani Jr</em> em 2023</p>
   </footer>
   
