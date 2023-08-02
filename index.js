@@ -51,12 +51,50 @@ async function fillLocations()
   document.getElementById('counterLocations').innerHTML = "LOCALIZAÇÕES: " + locations.size;
 }
 
+function fillPagination(apiInfo)
+{
+  const nextPage = apiInfo.next;
+  const prevPage = apiInfo.prev;
+
+  const nextPageNumberMatch = nextPage?.match(/page=(\d+)/);
+  const currentPageNumber = nextPageNumberMatch ? parseInt(nextPageNumberMatch[1]) - 1 : 1;
+
+  let paginationContent = "Páginas: ";
+  let currentURL = new URL(window.location.href);
+
+  if (prevPage)
+  {
+    currentURL.searchParams.set('page', currentPageNumber - 1);
+    paginationContent += `<a href="${currentURL.href}"> &lt; ${currentPageNumber - 1} </a>`;
+  }
+  
+  paginationContent += ` &nbsp;&nbsp; ${currentPageNumber} &nbsp;&nbsp; `;
+
+  if(nextPage)
+  {
+    currentURL.searchParams.set('page', currentPageNumber + 1);
+    paginationContent += `<a href="${currentURL.href}"> ${currentPageNumber + 1} &gt; </a>`;
+  }
+
+  document.getElementById('pagination').innerHTML = paginationContent;
+}
+
 await fillEpisodes();
 await fillLocations();
 
 //Get characters
 
-axios.get("https://rickandmortyapi.com/api/character")
+let currentURL = new URL(window.location.href);
+let apiURL = new URL("https://rickandmortyapi.com/api/character");
+apiURL.searchParams.set('page', currentURL.searchParams.get('page') || 1);
+const searchValue = currentURL.searchParams.get('search');
+if (searchValue)
+{
+  apiURL.searchParams.set('name', searchValue);
+  document.getElementById('search').value = searchValue;
+}
+
+axios.get(apiURL.href)
   .then(function(response) {
     let cards = "";
     let count = 0;
@@ -106,7 +144,30 @@ axios.get("https://rickandmortyapi.com/api/character")
 
     document.querySelector("main").innerHTML = cards;
     document.getElementById('counterCharacters').innerHTML = "PERSONAGENS: " + response.data.info.count;
+
+    fillPagination(response.data.info);
   })
   .catch(function(error) {
     console.log(error);
   });
+
+  //
+  window.searchListener = (event) =>
+  {
+    if (event.keyCode !== 13 )
+      return;
+
+    let currentURL = new URL(window.location.href);
+    currentURL.searchParams.set('page', 1);
+
+    let searchValue = document.getElementById('search').value;
+    if (searchValue)
+      currentURL.searchParams.set('search', searchValue);
+    else
+      currentURL.searchParams.delete('search');
+
+    window.location.href = currentURL.href;
+  }
+  
+
+  
