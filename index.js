@@ -151,10 +151,11 @@ axios.get(apiURL.href)
     console.log(error);
   });
 
-  //
-  window.searchListener = (event) =>
+  //search input event
+  let searchInput = document.getElementById('search');
+  searchInput.addEventListener('keyup', (event) =>
   {
-    if (event.keyCode !== 13 )
+    if (event.key !== "Enter" )
       return;
 
     let currentURL = new URL(window.location.href);
@@ -167,7 +168,6 @@ axios.get(apiURL.href)
       currentURL.searchParams.delete('search');
 
     window.location.href = currentURL.href;
-  }
-  
+  });  
 
   
